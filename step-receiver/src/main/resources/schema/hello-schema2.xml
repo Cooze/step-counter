@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema>
+    <head>
+        <name>test2</name>
+        <timeFrame>1m</timeFrame>
+    </head>
+    <body>
+        <keyFields>
+            <keyField>1</keyField>
+            <keyField>2</keyField>
+        </keyFields>
+        <countFields>
+            <countField>c1</countField>
+            <countField>c2</countField>
+            <countField>c3</countField>
+        </countFields>
+    </body>
+</schema>

@@ -1,0 +1,35 @@
+<assembly>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>${project.basedir}/src/main/resources</directory>
+            <outputDirectory>conf</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/build/scripts</directory>
+            <outputDirectory>bin</outputDirectory>
+            <directoryMode>755</directoryMode>
+            <fileMode>755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/lib</directory>
+            <outputDirectory>lib</outputDirectory>
+            <directoryMode>744</directoryMode>
+            <fileMode>744</fileMode>
+        </fileSet>
+    </fileSets>
+
+    <dependencySets>
+        <dependencySet>
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <includes>
+                <include>*:jar</include>
+            </includes>
+            <directoryMode>744</directoryMode>
+            <fileMode>744</fileMode>
+        </dependencySet>
+    </dependencySets>
+</assembly>

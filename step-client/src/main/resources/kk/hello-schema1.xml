@@ -1,0 +1,15 @@
+<schema>
+    <head>
+        <name>test1</name>
+        <timeFrame>5m</timeFrame>
+    </head>
+    <body>
+        <keyFields>
+            <keyField>countName</keyField>
+        </keyFields>
+        <countFields>
+            <countField>c1</countField>
+            <countField>c2</countField>
+        </countFields>
+    </body>
+</schema>

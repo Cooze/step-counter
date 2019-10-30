@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.3.xsd
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    <context:property-placeholder file-encoding="utf-8" location="/ServerConfig.properties"/>
+    <context:annotation-config/>
+    <!-- init server -->
+    <bean id="tcpServer" class="org.cooze.stepcounter.core.net.server.TcpServer" destroy-method="close">
+        <constructor-arg index="0" type="java.lang.String" value="${server.host}"/>
+        <constructor-arg index="1" type="int" value="${server.port}"/>
+        <property name="handler" ref="messageHandler"/>
+    </bean>
+
+    <bean id="messageHandler" class="org.cooze.stepcounter.receiver.handler.MessageHandlerImpl"/>
+    <bean id="dataReciever" class="org.cooze.stepcounter.receiver.DataReceiver" init-method="init">
+        <property name="nodeName" value="${node.name}"/>
+    </bean>
+    <bean id="zkClientConfig" class="org.cooze.stepcounter.record.zk.ZkClientConfig">
+        <property name="sessionTimeoutMs" value="${zk.sessionTimeoutMs}"/>
+        <property name="connectionTimeoutMs" value="${zk.connectionTimeoutMs}"/>
+        <property name="hosts" value="${zk.hosts}"/>
+        <property name="maxRetries" value="${zk.maxRetries}"/>
+        <property name="maxTotal" value="${zk.maxTotal}"/>
+        <property name="minIdle" value="${zk.minIdle}"/>
+        <property name="namespace" value="${server.namespace}"/>
+    </bean>
+    <bean id="zkClientPool" class="org.cooze.stepcounter.record.zk.ZkClientPool">
+        <constructor-arg index="0" ref="zkClientConfig"/>
+    </bean>
+    <bean id="dataStoreZkTemplate" class="org.cooze.stepcounter.record.DataStoreZkTemplate">
+        <property name="zkClientPool" ref="zkClientPool"/>
+    </bean>
+</beans>
